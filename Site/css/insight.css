@@ -1,0 +1,24 @@
+﻿a { cursor:pointer; text-decoration:underline; color:#0a12a9 }
+
+ul { list-style:none; -webkit-padding-start:0 }
+
+.ng-invalid {
+    background-color:#ffa5b4;
+    color:#a80303;
+    border:1px solid;
+    outline-color:#ff0000;
+    border-color:#ff0000;
+}
+
+.ng-dirty:not(.ng-invalid){
+    background-color:#61ddff;
+    color:#042f69;
+    border:1px solid;
+    outline-color:#042f69;
+    border-color:#042f69;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
