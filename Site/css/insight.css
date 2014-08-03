@@ -10,7 +10,7 @@ ul { list-style:none; -webkit-padding-start:0 }
     border-color:#ff0000;
 }
 
-.ng-dirty:not(.ng-invalid){
+.ng-dirty:not(.ng-invalid):not(form){
     background-color:#61ddff;
     color:#042f69;
     border:1px solid;

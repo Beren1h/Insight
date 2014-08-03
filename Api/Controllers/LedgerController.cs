@@ -26,6 +26,13 @@ namespace Api.Controllers
         }
 
         [HttpPost]
+        [Route("items/delete")]
+        public bool DeleteItem(Item item)
+        {
+            return _mongoContext.DeleteItem(item);
+        }
+
+        [HttpPost]
         [Route("items/save")]
         public bool SaveItems(IEnumerable<Item> items)
         //public IEnumerable<Item> UpdateItem(IEnumerable<Item> items)
@@ -37,9 +44,9 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("items/add")]
-        public Item AddItem(Item item)
+        public bool AddItem(Item item)
         {
-            return item;
+            return _mongoContext.AddItem(item);
         }
 
         //[HttpPost]

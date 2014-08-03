@@ -15,6 +15,7 @@ namespace Api.Framework
     {
         private MongoDatabase _database;
         private const string DATABASE = "insight";
+        private const string ITEMS_COLLECTION = "items";
 
         public MongoContext()
         {
@@ -24,9 +25,43 @@ namespace Api.Framework
             _database = server.GetDatabase(DATABASE);
         }
 
+        public bool DeleteItem(Item item)
+        {
+            var collection = _database.GetCollection<Item>(ITEMS_COLLECTION);
+
+            try
+            {
+                collection.Remove(Query.EQ("_id", ObjectId.Parse(item.Id)));
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+
+        }
+
+        public bool AddItem(Item item)
+        {
+            var collection = _database.GetCollection<Item>(ITEMS_COLLECTION);
+
+            try
+            {
+                collection.Insert(item);
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+
+        }
+
         public bool SaveItems(IEnumerable<Item> items)
         {
-            var collection = _database.GetCollection<Item>("items");
+            var collection = _database.GetCollection<Item>(ITEMS_COLLECTION);
 
             try
             {
@@ -48,7 +83,7 @@ namespace Api.Framework
 
         public IEnumerable<Item> GetItems()
         {
-            var collection = _database.GetCollection<Item>("items");
+            var collection = _database.GetCollection<Item>(ITEMS_COLLECTION);
             
             return collection.FindAllAs<Item>().SetSortOrder(SortBy.Ascending("Name"));
         }

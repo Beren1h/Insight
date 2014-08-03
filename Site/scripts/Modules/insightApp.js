@@ -1,6 +1,6 @@
 ﻿var insightApp = angular.module('insightApp', []);
 
-insightApp.controller('Controller', function ($scope, $http) {
+insightApp.controller('ajaxController', function ($scope, $http) {
 
     $scope.add = {};
 

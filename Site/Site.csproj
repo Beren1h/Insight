@@ -100,8 +100,14 @@
     <Content Include="scripts\angular-mocks.js" />
     <Content Include="scripts\angular.js" />
     <Content Include="scripts\angular.min.js" />
-    <Content Include="scripts\Modules\api.js" />
+    <Content Include="scripts\app.js" />
+    <Content Include="scripts\configs\itemConfig.js" />
+    <Content Include="scripts\constants\constants.js" />
+    <Content Include="scripts\controllers\items.js" />
+    <Content Include="scripts\controllers\org.js" />
+    <Content Include="scripts\factories\itemHandler.js" />
     <Content Include="scripts\Modules\insightApp.js" />
+    <Content Include="scripts\services\api.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

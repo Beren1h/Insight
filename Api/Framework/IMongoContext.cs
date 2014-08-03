@@ -18,6 +18,8 @@ namespace Api.Framework
         bool InitializeItems();
         IEnumerable<Item> GetItems();
         bool SaveItems(IEnumerable<Item> items);
+        bool AddItem(Item item);
+        bool DeleteItem(Item item);
 
 
 

@@ -1,27 +1,30 @@
-﻿<div ng-controller="ajaxController">
-    <a ng-click="get('http://insight.org:8001/api/ledger/items/get')">list</a>
-        <ul>
-            <li ng-repeat="datum in data">
-                <input type="hidden" value="{{datum.Id}}" />
-                <input type="text" ng-model="data[$index].Name" />
-                <select ng-model="data[$index].FrequencyObject.code" ng-options="f.code as f.name for f in frequencies">    </select>
-                <input type="number" ng-model="data[$index].Amount" />
-                <input type="number" ng-model="data[$index].Day" ng-pattern="/^(\+|-)?\d+$/" min="-1" max="31" />
-            </li>
-        </ul>
-        <a ng-show="data.length > 0" ng-click="updateItem('http://insight.org:8001/api/ledger/items/save', data)">update</a>
+﻿<div ng-controller="ItemsController">
+    <a ng-click="GetItems()">list</a>
+    <ul>
+        <li ng-repeat="datum in data">
+            <input type="hidden" value="{{datum.Id}}" />
+            <input type="text" ng-model="data[$index].Name" />
+            <select ng-model="data[$index].FrequencyObject.code" ng-options="f.code as f.name for f in frequencies"></select>
+            <input type="number" ng-model="data[$index].Amount" />
+            <input type="number" ng-model="data[$index].Day" ng-pattern="/^(\+|-)?\d+$/" min="-1" max="31" />
+            <a ng-click="DeleteItem(data[$index])">Delete</a>
+        </li>
+    </ul>
+    <a ng-show="data.length > 0" ng-click="SaveItems(data)">Save</a>
 
     <ul>
         <li ng-show="data.length > 0">
-            <input type="text" ng-model="add.Name"/>
-            <select ng-model="add.Frequency.code" ng-options="f.code as f.name for f in frequencies">    </select>
-            <input type="number" ng-model="add.Amount"/>
-            <input type="number" ng-model="add.Day" ng-pattern="/^(\+|-)?\d+$/" min="-1" max="31" />
-            <a ng-click="post('http://insight.org:8001/api/ledger/items/add', add)">Add</a>
+            <form name="addForm">
+                <input type="text" ng-model="add.Name" />
+                <select ng-model="add.FrequencyObject.code" ng-options="f.code as f.name for f in frequencies"></select>
+                <input type="number" ng-model="add.Amount" />
+                <input type="number" ng-model="add.Day" ng-pattern="/^(\+|-)?\d+$/" min="-1" max="31" />
+                <a ng-click="AddItem(add)">Add</a>
+            </form>
         </li>
     </ul>
-    
 </div>
+
 
 
 
