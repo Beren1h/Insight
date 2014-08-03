@@ -12,6 +12,9 @@
         });
     };
 
+    //initialize
+    $scope.GetItems();
+
     $scope.SaveItems = function (saves) {
 
         for (index in saves) {
