@@ -13,161 +13,48 @@ using System.Web.Http.Cors;
 
 namespace Api.Controllers
 {
-    //[EnableCors(origins: "http://insight.org", headers: "Allow-Control-Allow-Origin", methods: "*")]
     [EnableCors(origins: "http://insight.org", headers: "*", methods: "*")]
     [RoutePrefix("api/ledger")]
     public class LedgerController : ApiController
     {
         private IMongoContext _mongoContext;
+        private ILedgerHelper _helper;
         
-        public LedgerController(IMongoContext mongoContext)
+        public LedgerController(IMongoContext mongoContext, ILedgerHelper helper)
         {
             _mongoContext = mongoContext;
+            _helper = helper;
         }
 
         [HttpPost]
-        [Route("items/delete")]
-        public bool DeleteItem(Item item)
+        [Route("sum")]
+        public Decimal Sum(Sum sum)
         {
-            return _mongoContext.DeleteItem(item);
+            return _mongoContext.Total(sum);
         }
 
         [HttpPost]
-        [Route("items/save")]
-        public bool SaveItems(IEnumerable<Item> items)
-        //public IEnumerable<Item> UpdateItem(IEnumerable<Item> items)
-        //public Simple UpdateItem(Simple simples)
+        [Route("create")]
+        public Earning Create(Earning earning)
         {
-
-            return _mongoContext.SaveItems(items);
+            earning.Onuses = _helper.GetOnusesPerEarning(earning.Date, earning.Next);
+            return earning;
         }
 
         [HttpPost]
-        [Route("items/add")]
-        public bool AddItem(Item item)
+        [Route("edit")]
+        public Earning Edit(Earning earning)
         {
-            return _mongoContext.AddItem(item);
-        }
-
-        //[HttpPost]
-        //[Route("items/update")]
-        //public Item UpdateItem(Item item)
-        //{
-        //    return item;
-        //}
-
-        [HttpGet]
-        [Route("items/get")]
-        public IEnumerable<Item> GetItems()
-        {
-            return _mongoContext.GetItems();
-        }
-
-        [HttpGet]
-        [Route("items/init")]
-        public bool InitializeItems()
-        {
-            return _mongoContext.InitializeItems();
-        }
-
-                
-        [HttpPost]
-        [Route("see")]
-        public Entry See()
-        {
-            var item1 = new LineItem
-            {
-                Date = new DateTime(2014, 08, 01),
-                Amount = 112.10m,
-                Tag = 1,
-                Memo = "test memo 1",
-            };
-
-            var item2 = new LineItem
-            {
-                Date = new DateTime(2014, 08, 10),
-                Amount = 179.34m,
-                Tag = 1,
-                Memo = "test memo 2",
-            };
-
-            var entry = new Entry
-            {
-                Date = new DateTime(2014, 07, 22),
-                Amount = 2210.56m,
-                LineItems = new List<LineItem> { item1, item2 }
-            };
-
-            return entry;
+            return _mongoContext.GetEarning(earning.Date);
         }
 
         [HttpPost]
-        [Route("send")]
-        public Entry Send(Entry entry)
+        [Route("save")]
+        public bool Save(Earning earning)
         {
-            return entry;
+            return _mongoContext.SaveEarning(earning);
         }
 
-        [HttpGet]
-        [Route("get/{id}")]
-        public Entry GetEntry(string id)
-        {
-            //ControllerContext.HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "insight.org");
-            
-
-
-            var entry = _mongoContext.GetEntry(id);
-
-            return entry;
-        }
-
-        [HttpGet]
-        [Route("drop")]
-        public bool Clear()
-        {
-            return _mongoContext.DropEntries();
-        }
-
-        [HttpPost]
-        [Route("add")]
-        public bool AddTestEntry()
-        {
-            var item1 = new LineItem
-            {
-                Date = new DateTime(2014, 08, 01),
-                Amount = 112.10m,
-                Tag = 1,
-                Memo = "test memo 1",
-            };
-
-            var item2 = new LineItem
-            {
-                Date = new DateTime(2014, 08, 10),
-                Amount = 179.34m,
-                Tag = 1,
-                Memo = "test memo 2",
-            };
-
-            var entry = new Entry
-            {
-                Date = new DateTime(2014, 07, 22),
-                Amount = 2210.56m,
-                LineItems = new List<LineItem> { item1, item2 }
-            };
-                        
-            return _mongoContext.AddEntry(entry);
-
-        }
-
-
-        //[HttpGet]
-        //[Route("get/{name}")]
-        //public IEnumerable<string> Entry(string name)
-        //{
-        //    var item = _mongoContext.TestRead(name);
-
-        //    return new List<string> { item };
-        //}
     }
 }
 

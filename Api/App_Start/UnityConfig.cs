@@ -17,6 +17,7 @@ namespace Api
             // e.g. container.RegisterType<ITestService, TestService>();
 
             container.RegisterType<IMongoContext, MongoContext>(new ContainerControlledLifetimeManager());
+            container.RegisterType<ILedgerHelper, LedgerHelper>(new ContainerControlledLifetimeManager());
             
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

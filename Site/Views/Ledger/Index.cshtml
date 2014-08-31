@@ -1,0 +1,118 @@
+﻿@model Site.Models.Ledger
+
+<div ng-controller="LedgerController" class="container-fluid">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <label for="earning-date" class="">Date</label>
+                    <input id="earning-date" class="form-control" type="date" ng-model="earning.Date" />
+                    <a class="btn btn-default" ng-click="EditEarning(earning)">Edit</a>
+                </div>
+            </form>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <label for="earning-next" class="control-label">Next</label>
+                    <input id="earning-next" class="form-control" type="date" ng-model="earning.Next" />
+                </div>
+                <div class="form-group">
+                    <label for="earning-amount" class="control-label">Amount</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input id="earning-amount" class="form-control" type="number" ng-model="earning.Amount" />
+                    </div>
+                    <a class="btn btn-default" ng-click="CreateEarning(earning)">Create</a>
+                </div>
+            </form>
+            <form class="navbar-form navbar-left" ng-show="earning.Onuses.length > 0">
+                <div class="form-group">
+                    <a ng-click="Save(earning)" class="btn btn-primary">Save</a>
+                </div>
+            </form>
+            <p class="navbar-text navbar-right" ng-class="{neg:total < 0}">{{total | currency}}</p>
+        </div>
+    </nav>
+
+    <div class="row" ng-show="earning.Onuses.length > 0">
+
+        <div class="col-md-10">
+            <form class="form-horizontal">
+                <div class="form-group form-heading">
+                    <div class="col-md-1 text-center">
+                        <label>Cleared</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Date</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Item</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Amount</label>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Memo</label>
+                    </div>
+                </div>
+                <div class="form-group dirty-state-check" ng-repeat="onus in earning.Onuses | orderBy:'Date'">
+                    <div class="col-md-1">
+                        <input type="checkbox" class="form-control" ng-model="onus.Cleared" />
+                    </div>
+                    <div class="col-md-2">
+                        <input type="date" class="form-control" ng-model="onus.Date" min="{{earning.Date}}" max="{{earning.Next}}" />
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control" ng-model="onus.ItemId" ng-options="item.Id as item.Name for item in items"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="number" class="form-control" ng-model="onus.Amount" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <textarea class="form-control" ng-model="onus.Memo"></textarea>
+                    </div>
+                    <div class="col-md-1">
+                        <a class="btn btn-danger btn-xs col-middle" ng-click="RemoveOnus(onus)">Remove</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="col-md-2">
+            <div class="panel panel-default" data-spy="affix">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="">Date</label>
+                        <input type="date" class="form-control" ng-model="add.Date" min="{{earning.Date}}" max="{{earning.Next}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="">Item</label>
+                        <select class="form-control" ng-model="add.ItemId" ng-options="item.Id as item.Name for item in items"></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="">Amount</label>
+                        <div class="input-group input-group-throttle">
+                            <span class="input-group-addon">$</span>
+                            <input type="number" class="form-control" ng-model="add.Amount" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="">Memo</label>
+                        <textarea class="form-control" ng-model="add.Memo"></textarea>
+                    </div>
+                    <div class="form-group text-center">
+                        <a class="btn btn-success" ng-click="AddOnus(add)">Add</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>

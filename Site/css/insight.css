@@ -1,16 +1,44 @@
-﻿a { cursor:pointer; text-decoration:underline; color:#0a12a9 }
-
-ul { list-style:none; -webkit-padding-start:0 }
-
-.ng-invalid {
-    background-color:#ffa5b4;
-    color:#a80303;
-    border:1px solid;
-    outline-color:#ff0000;
-    border-color:#ff0000;
+﻿nav p{
+    font-size:30px;
+    margin:0;
+    padding:0;
+    color:#ffffff !important;
 }
 
-.ng-dirty:not(.ng-invalid):not(form){
+.navbar-inverse{
+    background-color:#0a0a0a;
+}
+
+nav p.neg{
+    color:#ff0000 !important;
+}
+
+.navbar-form .form-group{
+    margin-top:12px;
+}
+
+body{
+    background-color:#000000;
+    padding-top:90px;
+}
+
+.ng-invalid-number:not(form) {
+    background-color:#ffa5b4;
+    color:#a80303 !important;
+    border:1px solid;
+    outline-color:#ff0000 !important;
+    border-color:#ff0000 !important;
+}
+
+.input-group-throttle{
+    width:200px;
+}
+
+.form-heading{
+    margin-bottom:0 !important;
+}
+
+.dirty-state-check .ng-dirty:not(.ng-invalid):not(form){
     background-color:#61ddff;
     color:#042f69;
     border:1px solid;
@@ -18,7 +46,20 @@ ul { list-style:none; -webkit-padding-start:0 }
     border-color:#042f69;
 }
 
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+.panel{
+    background-color:#010d03;
+    border-color:#053812;
+    color:#333333;
+}
+
+.form-control {
+    color:#cecece;
+    background-color:#171717;
+    border-color:#383535;
+}
+
+.input-group-addon {
+    color:#cecece;
+    background-color:#171717;
+    border-color:#383535;
 }

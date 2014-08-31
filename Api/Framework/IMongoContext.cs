@@ -9,10 +9,15 @@ namespace Api.Framework
 {
     public interface IMongoContext
     {
-        string TestRead(string thing);
-        bool AddEntry(Entry entry);
-        Entry GetEntry(string id);
-        bool DropEntries();
+        //string TestRead(string thing);
+        //bool AddEntry(Entry entry);
+        //Entry GetEntry(string id);
+        //bool DropEntries();
+
+        Onus FindLastOnus(string id);
+        bool SaveEarning(Earning earning);
+        Earning GetEarning(DateTime date);
+        Decimal Total(Sum sum);
 
 
         bool InitializeItems();
@@ -20,6 +25,10 @@ namespace Api.Framework
         bool SaveItems(IEnumerable<Item> items);
         bool AddItem(Item item);
         bool DeleteItem(Item item);
+
+        //IEnumerable<LineItem> InitializeLineItem(LineItem start);
+
+        //LineItem FindLastLineItem(LineItem start);
 
 
 
