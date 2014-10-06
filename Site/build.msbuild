@@ -1,0 +1,52 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+ 
+	<Target Name="Root">
+		<CallTarget Targets="Clean" />
+		<CallTarget Targets="Build" />
+		<CallTarget Targets="Stage" />	
+	</Target>
+ 
+	<Target Name="Clean">
+		<ItemGroup>
+			<BinFiles Include="bin\*.*" />
+		</ItemGroup>
+		<Delete Files="@(BinFiles)" />
+	</Target>
+ 
+	<Target Name="Build">
+		<MSBuild Projects="Site.csproj" Properties="Configuration=Release" />
+	</Target>
+  
+  <Target Name="Stage">
+	<ItemGroup>
+	  <bin Include="bin\*.*" />
+	  <content Include="content\*.*" />
+	  <css Include="css\*.*" />
+	  <scripts Include="scripts\*.*" />
+	  <fonts Include="fonts\*.*" />	  
+	  <views Include="Views\*.*" />
+	  <files Include="Global.asax;Web.config" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <clean Include="c:\cards\*.*" />	  
+	</ItemGroup>
+
+	<RemoveDir Directories="c:\cards\bin" />
+	<RemoveDir Directories="c:\cards\content" />
+	<RemoveDir Directories="c:\cards\css" />
+	<RemoveDir Directories="c:\cards\scripts" />
+	<RemoveDir Directories="c:\cards\fonts" />
+	<RemoveDir Directories="c:\cards\views" />	
+	<Delete Files="@(clean)" />				
+  
+	<Copy SourceFiles="@(bin)" DestinationFolder="c:\cards\bin"></Copy>  
+	<Copy SourceFiles="@(content)" DestinationFolder="c:\cards\Content"></Copy>  
+	<Copy SourceFiles="@(css)" DestinationFolder="c:\cards\css"></Copy>  
+	<Copy SourceFiles="@(scripts)" DestinationFolder="c:\cards\scripts"></Copy>  
+	<Copy SourceFiles="@(fonts)" DestinationFolder="c:\cards\fonts"></Copy>  
+	<Copy SourceFiles="@(views)" DestinationFolder="c:\cards\Views"></Copy>  
+	<Copy SourceFiles="@(files)" DestinationFolder="c:\cards\"></Copy>    
+  </Target>
+  
+</Project>

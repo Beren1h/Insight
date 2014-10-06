@@ -113,7 +113,6 @@
     <Content Include="scripts\constants\constants.js" />
     <Content Include="scripts\controllers\items.js" />
     <Content Include="scripts\controllers\ledger.js" />
-    <Content Include="scripts\controllers\ledger2.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
