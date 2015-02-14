@@ -1,5 +1,7 @@
 ﻿var LedgerController = function ($scope, $api, $constants, $log) {
 
+    $scope.form = 
+
     $scope.items = {};
 
     $scope.add = {};
@@ -33,9 +35,10 @@
     };
 
     $scope.Save = function (earning) {
+
         $api.ledger.save(earning).then(function (response) {
             if (response.status == 200) {
-                $scope.earning = {};
+                $scope.onusForm.$setPristine();
             }
         },
         function (response) {
@@ -45,7 +48,9 @@
     };
 
     $scope.RemoveOnus = function (Onus) {
+        
         $scope.earning.Onuses.forEach(function (onus, index) {
+            
             if (onus.ItemId == Onus.ItemId && onus.Date == Onus.Date) {
                 $scope.earning.Onuses.splice(index, 1);
             }

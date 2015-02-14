@@ -34,8 +34,14 @@ namespace Api.Framework
 
             var earnings = collection.FindAllAs<Earning>();
 
-            var earningsTotal = earnings.Where(e => e.Date.CompareTo(sum.End) < 0).Sum(e => e.Amount);
-            var onusesTotal = earnings.SelectMany(e => e.Onuses).Where(o => o.Date.CompareTo(sum.End) < 0).Sum(o => o.Amount);
+            var earningsTotal = earnings.Where(e => e.Date.CompareTo(sum.End) <= 0).Sum(e => e.Amount);
+            var onusesTotal = earnings.SelectMany(e => e.Onuses).Where(o => o.Date.CompareTo(sum.End) <= 0).Sum(o => o.Amount);
+
+            if (sum.includeOnlyCleared)
+            {
+                var unclearedTotal = earnings.SelectMany(e => e.Onuses).Where(o => o.Date.CompareTo(sum.End) <= 0 && !o.Cleared).Sum(o => o.Amount);
+                onusesTotal -= unclearedTotal;
+            }
 
             Decimal balance = 0;
 
@@ -45,6 +51,8 @@ namespace Api.Framework
                
                 balance = Decimal.Parse(balanceCollection.FindOne().Elements.FirstOrDefault(a => a.Name == "Amount").Value.ToString());
             }
+
+
 
             return earningsTotal + onusesTotal + balance;
         }
