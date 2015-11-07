@@ -58,6 +58,36 @@ namespace Api.Framework
         }
 
 
+        public Analytic TotalByOnus(Analytic analytics)
+        {
+            var dictionary = new Dictionary<string, decimal>();
+
+            var collection = _database.GetCollection<Earning>(EARNING_COLLECTION);
+
+            var earnings = collection.FindAllAs<Earning>().SetSortOrder(SortBy.Ascending("Date"));
+
+            var matchEarnings = earnings.Where(e => e.Date.CompareTo(analytics.End) <= 0 && e.Date.CompareTo(analytics.Start) >= 0);
+
+            foreach(var earning in matchEarnings)
+            {
+                foreach(var onus in earning.Onuses)
+                {
+                    if(dictionary.ContainsKey(onus.ItemId))
+                    {
+                        dictionary[onus.ItemId] = dictionary[onus.ItemId] + onus.Amount;
+                    }
+                    else
+                    {
+                        dictionary.Add(onus.ItemId, onus.Amount);
+                    }
+                }
+            }
+
+            analytics.SumByOnus = dictionary;
+
+            return analytics;
+        }
+
         public bool SaveEarning(Earning earning)
         {
             var earnings = _database.GetCollection<Item>(EARNING_COLLECTION);

@@ -52,6 +52,13 @@ namespace Api.Controllers
         [Route("save")]
         public bool Save(Earning earning)
         {
+            var alreadyExists = _mongoContext.GetEarning(earning.Date);
+
+            if(alreadyExists != null)
+            {
+                return false;
+            }
+
             return _mongoContext.SaveEarning(earning);
         }
 

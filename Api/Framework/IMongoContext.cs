@@ -19,6 +19,7 @@ namespace Api.Framework
         Earning GetEarning(DateTime date);
         Decimal Total(Sum sum);
 
+        Analytic TotalByOnus(Analytic analytics);
 
         bool InitializeItems();
         IEnumerable<Item> GetItems();
